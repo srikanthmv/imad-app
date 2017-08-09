@@ -37,6 +37,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:article-one', function(req, res){
+    console.log(articleData.articleOne);
     res.send(getTemplate(articleData.articleOne));
 });
 
