@@ -5,24 +5,51 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleData = {
-    "articleOne":{
-        "heading":"This is article one",
-        "body":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        "quote":"VENKATA SRIKANTH MADDELA"
-    },
-    "articleTwo":{
-        "heading":"This is article two",
-        "body":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        "quote":"RAM PRASAD NAIDU GAJULA"
-    },
-    "articleThree":{
-        "heading":"This is article three",
-        "body":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        "quote":"PEDDIRAJULA SWAMY MUNAGALA"
-    }
 
-};
+function createTemplate (data) {
+    var title = data.title;
+    var date = data.date;
+    var heading = data.heading;
+    var content = data.content;
+    
+    var htmlTemplate = `
+    <html>
+      <head>
+          <title>
+              ${title}
+          </title>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link href="/ui/style.css" rel="stylesheet" />
+      </head> 
+      <body>
+          <div class="container">
+              <div>
+                  <a href="/">Home</a>
+              </div>
+              <hr/>
+              <h3>
+                  ${heading}
+              </h3>
+              <div>
+                  ${date.toDateString()}
+              </div>
+              <div>
+                ${content}
+              </div>
+              <hr/>
+              <h4>Comments</h4>
+              <div id="comment_form">
+              </div>
+              <div id="comments">
+                <center>Loading comments...</center>
+              </div>
+          </div>
+          <script type="text/javascript" src="/ui/article.js"></script>
+      </body>
+    </html>
+    `;
+    return htmlTemplate;
+}
 
 function getTemplate(article) {
     var heading = articleData.heading;
@@ -37,8 +64,11 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:article-one', function(req, res){
-    console.log(articleData.articleOne);
-    res.send(getTemplate(articleData.articleOne));
+    var temp = {
+        "title":"This is my first article",
+        "date": "09/082018"
+    }
+    res.send(createTemplate(temp));
 });
 
 app.get('/:article-two', function(req, res){
