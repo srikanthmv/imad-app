@@ -51,13 +51,6 @@ function createTemplate (data) {
     return htmlTemplate;
 }
 
-function getTemplate(article) {
-    var heading = articleData.heading;
-    var htmlContext = "<!DOCTYPE html> <html> <head> <title></title> </head> <body> " +
-        "<h2 style='text-align: center;'>${heading}</h2> <div style='text-align: center;'><p>${articleData.body}</p> " +
-        "</div> </body> </html>";
-    return htmlContext;
-}
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
@@ -66,7 +59,7 @@ app.get('/', function (req, res) {
 app.get('/:article-one', function(req, res){
     var temp = {
         "title":"This is my first article",
-        "date": "09/082018",
+        "date": "09/08/2018",
     }
     res.send(createTemplate(temp));
 });
