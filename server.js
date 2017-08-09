@@ -5,6 +5,16 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
+ var temp = {
+     "articleOne":{
+        
+        "title":"This is my first article",
+        "date": "09/08/2018",
+        
+     }
+        
+    }
+
 
 function createTemplate (data) {
     var title = data.title;
@@ -57,11 +67,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/:article-one', function(req, res){
-    var temp = {
-        "title":"This is my first article",
-        "date": "09/08/2018",
-    }
-    res.send(createTemplate(temp));
+    res.send(createTemplate(temp.articleOne));
 });
 
 app.get('/:article-two', function(req, res){
