@@ -66,7 +66,7 @@ app.get('/', function (req, res) {
 app.get('/:article-one', function(req, res){
     var temp = {
         "title":"This is my first article",
-        "date": "09/082018"
+        "date": "09/082018",
     }
     res.send(createTemplate(temp));
 });
