@@ -15,6 +15,8 @@ var config = {
 var app = express();
 app.use(morgan('combined'));
 
+var pool = new Pool(config);
+
  var temp = {
      "articleOne":{
         
