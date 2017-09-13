@@ -2,6 +2,15 @@ var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 var crypto = require('crypto');
+var pool = require('pg').pool;
+
+var config = {
+    user:'mvsrikanth230',
+    database:'mvsrikanth230',
+    host:'db.imad.hasura-app.io',
+    port:'5432',
+    password: DB_PASSWORD
+}
 
 var app = express();
 app.use(morgan('combined'));
@@ -16,6 +25,7 @@ app.use(morgan('combined'));
      }
         
     }
+    
 
 
 function createTemplate (data) {
@@ -67,6 +77,17 @@ function hash(inputString, salt){
     var hashed = crypto.pbkdf2Sync(inputString, salt, 100000, 512, 'sha512');
     return hashed.toString('hex');
 }
+
+app.get('/test-db', function(req, res){
+   pool.query('SELECT * FROM user ', function(error, result){
+       if(error){
+           res.status(500).send(error.toString());
+       }
+       else{
+           res.send(JSON.stringify(reslt));
+       }
+   }) 
+});
 
 app.get('/hash/:input', function(req, res){
     var hasedData = hash(req.params.input, "this is a sample string");
