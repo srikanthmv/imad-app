@@ -15,7 +15,6 @@ var config = {
 var app = express();
 app.use(morgan('combined'));
 
-var pool = new Pool(config);
 
  var temp = {
      "articleOne":{
@@ -80,6 +79,7 @@ function hash(inputString, salt){
     return hashed.toString('hex');
 }
 
+var pool = new Pool(config);
 app.get('/test-db', function(req, res){
    pool.query('SELECT * FROM user ', function(error, result){
        if(error){
